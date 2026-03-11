@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Minimalista</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .counter-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            }
+            100% {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .counter-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .counter-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        button {
+            background: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border-color: #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9ff;
+            transform: translateY(-2px);
+        }
+
+        .btn-reset {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: #e53e3e;
+            transform: translateY(-2px);
+        }
+
+        .todo-list {
+            margin-top: 30px;
+            border-top: 2px solid #f0f0f0;
+            padding-top: 25px;
+        }
+
+        .todo-title {
+            color: #333;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .todo-stats {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 14px;
+        }
+
+        .todo-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .todo-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .todo-add {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .todo-add:hover {
+            background: #5a67d8;
+        }
+
+        .todo-items {
+            list-style: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .todo-item {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .todo-item span {
+            color: #333;
+            font-size: 15px;
+        }
+
+        .todo-delete {
+            background: none;
+            border: none;
+            color: #f56565;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0 5px;
+            box-shadow: none;
+        }
+
+        .todo-delete:hover {
+            color: #e53e3e;
+            transform: scale(1.1);
+            background: none;
+            box-shadow: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ App Minimalista</h1>
+        <p class="subtitle">Um espaço simples e interativo para organizar suas ideias</p>
+
+        <!-- Campo de entrada com feedback -->
+        <div class="input-group">
+            <label>Seu nome</label>
+            <input type="text" id="nameInput" placeholder="Digite seu nome..." autocomplete="off">
+        </div>
+
+        <!-- Card do contador interativo -->
+        <div class="counter-card">
+            <div class="counter-value" id="counter">0</div>
+            <div class="counter-buttons">
+                <button class="btn-primary" onclick="decrementCounter()">-</button>
+                <button class="btn-primary" onclick="incrementCounter()">+</button>
+                <button class="btn-reset" onclick="resetCounter()">↻</button>
+            </div>
+        </div>
+
+        <!-- Lista de tarefas minimalista -->
+        <div class="todo-list">
+            <div class="todo-title">
+                Minhas tarefas
+                <span class="todo-stats" id="taskCount">0</span>
+            </div>
+            
+            <div class="todo-input-group">
+                <input type="text" class="todo-input" id="taskInput" placeholder="Adicionar nova tarefa..." onkeypress="handleKeyPress(event)">
+                <button class="todo-add" onclick="addTask()">+</button>
+            </div>
+
+            <ul class="todo-items" id="todoList">
+                <li class="empty-state">Nenhuma tarefa ainda. Que tal adicionar uma?</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Feito com ☕ e código minimalista</p>
+        </footer>
+    </div>
+
+    <script>
+        // Elementos do DOM
+        const nameInput = document.getElementById('nameInput');
+        const counterElement = document.getElementById('counter');
+        const taskInput = document.getElementById('taskInput');
+        const todoList = document.getElementById('todoList');
+        const taskCount = document.getElementById('taskCount');
+
+        // Estado do app
+        let counter = 0;
+        let tasks = [];
+
+        // Funções do contador
+        function incrementCounter() {
+            counter++;
+            updateCounter();
+        }
+
+        function decrementCounter() {
+            counter--;
+            updateCounter();
+        }
+
+        function resetCounter() {
+            counter = 0;
+            updateCounter();
+        }
+
+        function updateCounter() {
+            counterElement.textContent = counter;
+            
+            // Feedback visual baseado no valor
+            if (counter > 10) {
+                counterElement.style.color = '#f56565';
+            } else if (counter > 5) {
+                counterElement.style.color = '#ed8936';
+            } else {
+                counterElement.style.color = '#333';
+            }
+        }
+
+        // Funções da lista de tarefas
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            
+            if (taskText === '') {
+                alert('Por favor, digite uma tarefa!');
+                return;
+            }
+
+            tasks.push({
+                id: Date.now(),
+                text: taskText,
+                completed: false
+            });
+
+            taskInput.value = '';
+            renderTasks();
+        }
+
+        function deleteTask(id) {
+            tasks = tasks.filter(task => task.id !== id);
+            renderTasks();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        }
+
+        function renderTasks() {
+            if (tasks.length === 0) {
+                todoList.innerHTML = '<li class="empty-state">Nenhuma tarefa ainda. Que tal adicionar uma?</li>';
+                taskCount.textContent = '0';
+                return;
+            }
+
+            let html = '';
+            tasks.forEach(task => {
+                html += `
+                    <li class="todo-item">
+                        <span>${task.text}</span>
+                        <button class="todo-delete" onclick="deleteTask(${task.id})">×</button>
+                    </li>
+                `;
+            });
+
+            todoList.innerHTML = html;
+            taskCount.textContent = tasks.length;
+        }
+
+        // Interação com o campo de nome
+        nameInput.addEventListener('input', function(e) {
+            const name = e.target.value.trim();
+            if (name) {
+                document.querySelector('.subtitle').innerHTML = `Olá, <strong>${name}</strong>! Bem-vindo ao seu espaço minimalista ✨`;
+            } else {
+                document.querySelector('.subtitle').innerHTML = 'Um espaço simples e interativo para organizar suas ideias';
+            }
+        });
+
+        // Inicialização
+        updateCounter();
+        renderTasks();
+
+        // Adicionar tarefas de exemplo
+        setTimeout(() => {
+            if (tasks.length === 0) {
+                tasks.push(
+                    { id: 1, text: 'Explorar o app minimalista', completed: false },
+                    { id: 2, text: 'Testar o contador interativo', completed: false },
+                    { id: 3, text: 'Adicionar minhas próprias tarefas', completed: false }
+                );
+                renderTasks();
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
